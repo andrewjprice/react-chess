@@ -1,5 +1,5 @@
 import React from 'react';
-import Square from './Square';
+import Square from './square';
 import '../styles/index.css';
 
 export default class Board extends React.Component {
@@ -11,7 +11,7 @@ export default class Board extends React.Component {
         const shade = (i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j & 2 !== 0) ? 'light-shade' : 'dark-shade';
         row.push(
           <Square
-            style={null}
+            style={this.props.square[(i*8) + j] ? this.props.square[i].style : null}
             shade={shade}
             onClick={() => console.log(1)}
           />

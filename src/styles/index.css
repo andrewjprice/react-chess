@@ -13,9 +13,10 @@ code {
 }
 
 .board-container {
+  height: 100vh;
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
 }
 
 .row {

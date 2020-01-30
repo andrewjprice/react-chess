@@ -1,9 +1,9 @@
-import Piece from './Piece';
-import lightIcon from '../icons/pawn_light.svg';
-import darkIcon from '../icons/pawn_dark.svg';
+import Piece from './piece';
 
 export default class Pawn extends Piece {
     constructor(player) {
-        super(player, (player === 1 ? lightIcon : darkIcon))
+        const light = "https://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg";
+        const dark = "https://upload.wikimedia.org/wikipedia/commons/c/c7/Chess_pdt45.svg";
+        super(player, (player === 1 ? light : dark));
     }
 }
