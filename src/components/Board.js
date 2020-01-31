@@ -11,7 +11,7 @@ export default class Board extends React.Component {
         const shade = (i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j & 2 !== 0) ? 'light-shade' : 'dark-shade';
         row.push(
           <Square
-            style={this.props.square[(i*8) + j] ? this.props.square[i].style : null}
+            style={this.props.squares[i*8+j] ? this.props.squares[i*8+j].style : null}
             shade={shade}
             onClick={() => console.log(1)}
           />
