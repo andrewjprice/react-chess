@@ -13,7 +13,7 @@ export default class Board extends React.Component {
           <Square
             style={this.props.squares[i*8+j] ? this.props.squares[i*8+j].style : null}
             shade={shade}
-            onClick={() => console.log(1)}
+            onClick={() => this.props.onClick(i*8+j)}
           />
         )
       }
