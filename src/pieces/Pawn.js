@@ -12,7 +12,8 @@ export class Pawn extends Piece {
         }
     }
 
-    isMovePossible(currentPosition, destination, destinationSquare) {
+    isMovePossible(currentPosition, destination, squares) {
+        var destinationSquare = squares[destination];
         // Standard 1 move
         if (currentPosition - destination === 8 && !destinationSquare) {
             return true;

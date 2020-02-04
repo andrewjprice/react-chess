@@ -24,11 +24,9 @@ export default class Game extends React.Component {
     }
     else if (this.state.currentSelected > -1) {
       squares[this.state.currentSelected].style = {...squares[this.state.currentSelected].style, backgroundColor: ''};
-      if (squares[i] === null || squares[i].player !== this.state.player) {
-        if (squares[this.state.currentSelected].isMovePossible(this.state.currentSelected, i, squares[i])) {
-          squares[i] = squares[this.state.currentSelected];
-          squares[this.state.currentSelected] = null;
-        }
+      if (squares[this.state.currentSelected].isMovePossible(this.state.currentSelected, i, squares)) {
+        squares[i] = squares[this.state.currentSelected];
+        squares[this.state.currentSelected] = null;
       }
       this.setState({ squares: squares, currentSelected: -1});
     }

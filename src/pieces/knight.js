@@ -9,7 +9,8 @@ export class Knight extends Piece {
         this.validMoves = [6, 10, 15, 17];
     }
 
-    isMovePossible(currentPosition, destination, destinationSquare) {
+    isMovePossible(currentPosition, destination, squares) {
+        var destinationSquare = squares[destination];
         if (this.validMoves.indexOf(Math.abs(currentPosition - destination)) > -1) {
             if (!destinationSquare) {
                 return true;
