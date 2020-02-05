@@ -28,4 +28,14 @@ export class Pawn extends Piece {
         }
         return false;
     }
+
+    movePath(start, end) {
+        if (end === start + 16) {
+            return [start+8];
+        }
+        else if (end === start - 16) {
+            return [start-8];
+        }
+        return [];
+    }
 }

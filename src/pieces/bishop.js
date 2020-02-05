@@ -14,6 +14,30 @@ export class Bishop extends Piece {
         } else {
             return false;
         }
+    }
 
+    movePath(start, end) {
+        var path = [];
+        let pathStart, pathEnd, increment;
+        if (start > end) {
+            pathStart = end;
+            pathEnd = start;
+        } else {
+            pathStart = start;
+            pathEnd = end;
+        }
+        if (Math.abs(start - end) % 7 === 0 ) {
+            increment = 7;
+            pathStart += increment;
+        }
+        if (Math.abs(start - end) % 9 === 0 ) {
+            increment = 9;
+            pathStart += increment;
+        }
+
+        for (let i=pathStart; i<pathEnd; i+= increment) {
+            path.push(i);
+        }
+        return path;
     }
 }

@@ -15,7 +15,7 @@ export default class Game extends React.Component {
 
   movePiece(i) {
     const squares = this.state.squares.slice();
-
+    var current = squares[this.state.currentSelected];
     if (this.state.currentSelected === -1) {
       if (squares[i] && squares[i].player === this.state.player) {
         squares[i].style = {...squares[i].style, backgroundColor: 'gold'};
@@ -23,13 +23,26 @@ export default class Game extends React.Component {
       }
     }
     else if (this.state.currentSelected > -1) {
-      squares[this.state.currentSelected].style = {...squares[this.state.currentSelected].style, backgroundColor: ''};
-      if (squares[this.state.currentSelected].isMovePossible(this.state.currentSelected, i, squares)) {
-        squares[i] = squares[this.state.currentSelected];
-        squares[this.state.currentSelected] = null;
+      current.style = {...current.style, backgroundColor: ''};
+
+      if (current.isMovePossible(this.state.currentSelected, i, squares) && this.isMoveLegal(current.movePath(this.state.currentSelected, i))) {
+        if (squares[i] === null || squares[i].player !== this.state.player) {
+          squares[i] = current;
+          squares[this.state.currentSelected] = null;
+        }
       }
       this.setState({ squares: squares, currentSelected: -1});
     }
+  }
+
+  isMoveLegal(path) {
+    let legal = true;
+    for (let i=0; i<path.length; i++) {
+      if (this.state.squares[path[i]] !== null) {
+        legal = false;
+      }
+    }
+    return legal;
   }
 
   render() {

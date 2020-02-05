@@ -21,4 +21,8 @@ export class Knight extends Piece {
             return false;
         }
     }
+
+    movePath(start, end) {
+        return [];
+    }
 }
