@@ -12,30 +12,51 @@ export class Pawn extends Piece {
         }
     }
 
-    isMovePossible(currentPosition, destination, squares) {
+    isMovePossible(current, destination, squares) {
         var destinationSquare = squares[destination];
+        return this.isMoveLegal(current, destination, destinationSquare) && this.isPathPossible(current, destination, squares);
+    }
+
+    isMoveLegal(start, end, square) {
+        var move = Math.abs(start-end);
         // Standard 1 move
-        if (currentPosition - destination === 8 && !destinationSquare) {
+        if (!square && move === 8) {
             return true;
         }
         // 2 moves from start
-        else if (!destinationSquare && (currentPosition - destination === 16 && this.startingPosition[this.player].indexOf(currentPosition) !== -1)) {
+        else if (!square && (move === 16 && this.startingPosition[this.player].indexOf(start) !== -1)) {
             return true;
         }
         // Piece capture
-        else if ((currentPosition - destination === 7 || currentPosition - destination === 9) && destinationSquare) {
+        else if (square && (move === 7 || move === 9)) {
             return true;
         }
         return false;
     }
 
-    movePath(start, end) {
-        if (end === start + 16) {
-            return [start+8];
+    isPathPossible(start, end, squares) {
+        let increment;
+        var move = start-end;
+        if (this.player === 1) {
+            if (start < end) {
+                return false;
+            }
+            if (move === 16) {
+                increment = -8;
+            } else {
+                increment = end-start;
+            }
+
+            for (let i=start+increment; i>end; i+=increment) {
+                if (squares[i] !== null) {
+                    return false;
+                }
+            }
         }
-        else if (end === start - 16) {
-            return [start-8];
+        
+        if (squares[end]) {
+            return squares[end].player !== this.player
         }
-        return [];
+        return true;
     }
 }
