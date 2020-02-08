@@ -9,20 +9,23 @@ export class Knight extends Piece {
         this.validMoves = [6, 10, 15, 17];
     }
 
-    isMovePossible(currentPosition, destination, squares) {
+    isMovePossible(current, destination, squares) {
         var destinationSquare = squares[destination];
-        if (this.validMoves.indexOf(Math.abs(currentPosition - destination)) > -1) {
-            if (!destinationSquare) {
-                return true;
-            } else if (destinationSquare.player !== this.player) {
-                return true
-            }
+        return this.isMoveLegal(current, destination) && this.movePath(destinationSquare);
+    }
+
+    isMoveLegal(start, end) {
+        if (this.validMoves.indexOf(Math.abs(start - end)) > -1) {
+            return true
         } else {
             return false;
         }
     }
 
-    movePath(start, end) {
-        return [];
+    movePath(destinationSquare) {
+        if (destinationSquare) {
+            return destinationSquare.player !== this.player;
+        }
+        return true;
     }
 }
