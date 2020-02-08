@@ -33,16 +33,6 @@ export default class Game extends React.Component {
     }
   }
 
-  isMoveLegal(path) {
-    let legal = true;
-    for (let i=0; i<path.length; i++) {
-      if (this.state.squares[path[i]] !== null) {
-        legal = false;
-      }
-    }
-    return legal;
-  }
-
   render() {
     return (
       <div className="board-container">

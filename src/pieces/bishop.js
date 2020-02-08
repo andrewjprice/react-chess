@@ -8,16 +8,19 @@ export class Bishop extends Piece {
         this.player = player;
     }
 
-    isMovePossible(currentPosition, destination, squares) {
-        if (Math.abs(currentPosition - destination) % 7 === 0 || Math.abs(currentPosition - destination) % 9 === 0) {
+    isMovePossible(current, destination, squares) {
+        return this.isMoveLegal(current, destination) && this.isPathPossible(current, destination, squares);
+    }
+
+    isMoveLegal(start, end) {
+        if (Math.abs(start - end) % 7 === 0 || Math.abs(start - end) % 9 === 0) {
             return true;
         } else {
             return false;
         }
     }
 
-    movePath(start, end) {
-        var path = [];
+    isPathPossible(start, end, squares) {
         let pathStart, pathEnd, increment;
         if (start > end) {
             pathStart = end;
@@ -36,8 +39,13 @@ export class Bishop extends Piece {
         }
 
         for (let i=pathStart; i<pathEnd; i+= increment) {
-            path.push(i);
+            if (squares[i]) {
+                return false;
+            }
         }
-        return path;
+        if (squares[end]) {
+            return squares[end].player !== this.player;
+        }
+        return true;
     }
 }
