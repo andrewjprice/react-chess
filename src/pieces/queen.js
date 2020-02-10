@@ -8,15 +8,20 @@ export class Queen extends Piece {
         this.player = player;
     }
 
-    isMovePossible(currentPosition, destination, squares) {
-        return (Math.abs(currentPosition-destination) % 1 === 0 ||
-                Math.abs(currentPosition-destination) % 8 === 0 ||
-                Math.abs(currentPosition-destination) % 7 === 0 ||
-                Math.abs(currentPosition-destination) % 9 === 0)
+    isMovePossible(current, destination, squares) {
+        return this.isMoveLegal(current, destination) && this.isPathPossible(current, destination, squares);
     }
 
-    movePath(start, end) {
-        var path = [];
+    isMoveLegal(start, end) {
+        let mod = start % 8;
+        let diff = 8 - mod;
+        return (Math.abs(start-end) % 8 === 0 ||
+        Math.abs(start-end) % 7 === 0 ||
+        Math.abs(start-end) % 9 === 0 ||
+        end >= (start-mod) && end < (start+diff));
+    }
+
+    isPathPossible(start, end, squares) {
         let pathStart, pathEnd, increment;
         if (start > end) {
             pathStart = end;
@@ -42,9 +47,15 @@ export class Queen extends Piece {
             pathStart += increment;
         }
 
-        for (let i=pathStart; i<pathEnd; i+= increment) {
-            path.push(i);
+        for (let i=pathStart; i<pathEnd; i+=increment) {
+            if (squares[i]) {
+                return false;
+            }
         }
-        return path;
+        
+        if (squares[end]) {
+            return squares[end].player !== this.player;
+        }
+        return true;
     }
 }
