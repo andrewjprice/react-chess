@@ -4,12 +4,12 @@ import initializeBoard from '../helpers/initializeBoard';
 import '../styles/index.css';
 
 export default class Game extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      squares: initializeBoard(),
+      squares: initializeBoard(props.player),
       currentSelected: -1,
-      player: 1
+      player: props.player
     }
   }
 

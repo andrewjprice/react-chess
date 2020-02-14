@@ -3,6 +3,6 @@ import ReactDOM from 'react-dom';
 import Game from './components/Game';
 
 ReactDOM.render(
-    <Game />,
+    <Game player={1} />,
     document.getElementById('root')
 );

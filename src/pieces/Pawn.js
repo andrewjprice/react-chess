@@ -7,15 +7,16 @@ export class Pawn extends Piece {
         super(player, (player === 1 ? light : dark));
         this.piece = 'pawn';
         this.player = player;
-        this.startingPosition = {
-            1: [48, 49, 50, 51, 52, 53, 54, 55],
-            2: [8, 9, 10, 11, 12, 13, 14, 15, 16]
-        }
+        this.start = true;
     }
 
     isMovePossible(current, destination, squares) {
         var destinationSquare = squares[destination];
-        return this.isMoveLegal(current, destination, destinationSquare) && this.isPathPossible(current, destination, squares);
+        if (this.isMoveLegal(current, destination, destinationSquare) && this.isPathPossible(current, destination, squares)) {
+            this.start = false;
+            return true;
+        }
+        return false;
     }
 
     isMoveLegal(start, end, square) {
@@ -25,7 +26,7 @@ export class Pawn extends Piece {
             return true;
         }
         // 2 moves from start
-        else if (!square && (move === 16 && this.startingPosition[this.player].indexOf(start) !== -1)) {
+        else if (!square && (move === 16 && this.start)) {
             return true;
         }
         // Piece capture

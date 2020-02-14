@@ -1,6 +1,6 @@
 import { Pawn, Rook, Bishop, Knight, King, Queen } from '../pieces/index';
 
-export default function initializeBoard() {
+export default function initializeBoard(player) {
     const squares = Array(64).fill(null);
     for (let i=8; i<16; i++) {
         squares[i] = new Pawn(2);
@@ -24,5 +24,9 @@ export default function initializeBoard() {
     squares[62] = new Knight(1);
     squares[63] = new Rook(1);
 
-    return squares;
+    if (player === 2) {
+        return squares.reverse();
+    } else {
+        return squares;
+    }
 }
