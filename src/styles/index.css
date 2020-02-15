@@ -19,6 +19,11 @@ code {
   align-items: center;
 }
 
+.captured-block {
+  width: 15rem;
+  height: 25rem;
+}
+
 .row {
   display: flex;
 }
