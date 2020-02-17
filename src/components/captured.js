@@ -13,8 +13,8 @@ export default class Captured extends React.Component {
     render() {
         return(
             <div className="captured-block">
-                <div>{this.renderSquare(this.props.black)}</div>
-                <div>{this.renderSquare(this.props.white)}</div>
+                <div>{this.renderSquare(this.props.player2)}</div>
+                <div>{this.renderSquare(this.props.player1)}</div>
             </div>
         );
     }

@@ -57,7 +57,7 @@ export default class Game extends React.Component {
             />
         </div>
         <div>
-          <Captured white={this.state.capturedWhite} black={this.state.capturedBlack} />
+          <Captured player1={this.state.capturedWhite} player2={this.state.capturedBlack} />
         </div>
       </div>
     )
