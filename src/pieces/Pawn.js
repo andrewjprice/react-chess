@@ -37,27 +37,21 @@ export class Pawn extends Piece {
     }
 
     isPathPossible(start, end, squares) {
-        let increment;
-        var move = start-end;
-        if (this.player === 1) {
-            if (start < end) {
-                return false;
-            }
-            if (move === 16) {
-                increment = -8;
-            } else {
-                increment = end-start;
-            }
+        let increment = 8;
+        var move = Math.abs(start-end);
 
-            for (let i=start+increment; i>end; i+=increment) {
-                if (squares[i] !== null) {
-                    return false;
-                }
-            }
+        if (this.player === 1) {
+            increment = increment * -1;
         }
         
-        if (squares[end]) {
-            return squares[end].player !== this.player
+        if (move === 16 && (squares[start+increment] || squares[end])) {
+            return false;
+        } else if (move === 8 && squares[end]) {
+            return false;
+        } else {
+            if (squares[end]) {
+                return squares[end].player !== this.player
+            }
         }
         return true;
     }

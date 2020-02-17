@@ -20,15 +20,18 @@ export default class Game extends React.Component {
     const squares = this.state.squares.slice();
     const capturedWhite = this.state.capturedWhite.slice();
     const capturedBlack = this.state.capturedBlack.slice();
+    var isCheck = this.state.check;
 
     var current = squares[this.state.currentSelected];
 
+    // no piece selected
     if (this.state.currentSelected === -1) {
       if (squares[i] && squares[i].player === this.state.player) {
         squares[i].style = {...squares[i].style, backgroundColor: 'gold'};
         this.setState({ currentSelected: i });
       }
     }
+    // piece selected
     else if (this.state.currentSelected > -1) {
       current.style = {...current.style, backgroundColor: ''};
 
@@ -43,7 +46,7 @@ export default class Game extends React.Component {
         squares[i] = current;
         squares[this.state.currentSelected] = null;
       }
-      this.setState({ squares: squares, currentSelected: -1, capturedWhite: capturedWhite, capturedBlack: capturedBlack });
+      this.setState({ squares: squares, currentSelected: -1, capturedWhite: capturedWhite, capturedBlack: capturedBlack, check: isCheck });
     }
   }
 
@@ -53,6 +56,7 @@ export default class Game extends React.Component {
         <div>
           <Board
             squares={this.state.squares}
+            player={this.state.player}
             onClick={(i) => this.movePiece(i)}
             />
         </div>

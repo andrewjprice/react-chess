@@ -24,9 +24,5 @@ export default function initializeBoard(player) {
     squares[62] = new Knight(1);
     squares[63] = new Rook(1);
 
-    if (player === 2) {
-        return squares.reverse();
-    } else {
-        return squares;
-    }
+    return squares;
 }
