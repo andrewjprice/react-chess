@@ -24,7 +24,8 @@ code {
   flex-direction: column;
   justify-content: space-between;
   width: 15rem;
-  height: 25rem;
+  height: 24.3rem;
+  border-style: solid;
 }
 
 .row {
