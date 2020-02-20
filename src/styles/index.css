@@ -14,6 +14,7 @@ code {
 
 .board-container {
   height: 100vh;
+  background-color: lightgrey;
   display: flex;
   justify-content: center;
   align-items: center;

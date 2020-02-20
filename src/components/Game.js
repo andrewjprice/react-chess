@@ -20,7 +20,7 @@ export default class Game extends React.Component {
     const squares = this.state.squares.slice();
     const capturedWhite = this.state.capturedWhite.slice();
     const capturedBlack = this.state.capturedBlack.slice();
-    var isCheck = this.state.check;
+    var player = this.state.player;
 
     var current = squares[this.state.currentSelected];
 
@@ -45,8 +45,14 @@ export default class Game extends React.Component {
         }
         squares[i] = current;
         squares[this.state.currentSelected] = null;
+        player = player === 1 ? 2 : 1;
       }
-      this.setState({ squares: squares, currentSelected: -1, capturedWhite: capturedWhite, capturedBlack: capturedBlack, check: isCheck });
+      this.setState({
+        squares: squares,
+        currentSelected: -1,
+        capturedWhite: capturedWhite,
+        capturedBlack: capturedBlack,
+        player: player });
     }
   }
 
@@ -58,6 +64,7 @@ export default class Game extends React.Component {
             squares={this.state.squares}
             player={this.state.player}
             onClick={(i) => this.movePiece(i)}
+            flip={false}
             />
         </div>
         <div>
