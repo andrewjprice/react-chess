@@ -55,4 +55,21 @@ export class Pawn extends Piece {
         }
         return true;
     }
+
+    checkKing(current, squares) {
+        let left = 7;
+        let right = 9;
+        // only two paths to check king
+        if (this.player === 1) {
+            left = left * -1;
+            right = right * -1;
+        }
+        
+        if (squares[current+left] && squares[current+left].piece === 'king' || squares[current+right] && squares[current+right].piece === 'king') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
