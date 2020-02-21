@@ -60,16 +60,17 @@ export default class Game extends React.Component {
     return (
       <div className="board-container">
         <div>
+          <div>
+            <button onClick={() => this.setState({flip: !this.state.flip})}>Flip</button>
+          </div>
           <Board
             squares={this.state.squares}
             player={this.state.player}
             onClick={(i) => this.movePiece(i)}
-            flip={false}
+            flip={this.state.flip}
             />
         </div>
-        <div>
-          <Captured player1={this.state.capturedWhite} player2={this.state.capturedBlack} />
-        </div>
+        <Captured player1={this.state.capturedWhite} player2={this.state.capturedBlack} />
       </div>
     )
   }

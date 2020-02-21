@@ -6,7 +6,7 @@ export default class Board extends React.Component {
   renderSquare(index, shade) {
     let current = index;
 
-    if (this.props.player === 2 && this.props.flip) {
+    if (this.props.flip) {
       current = this.props.squares.length - current - 1;
     }
     return (
