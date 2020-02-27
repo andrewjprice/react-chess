@@ -12,7 +12,37 @@ export default class Game extends React.Component {
       currentSelected: -1,
       player: props.player,
       capturedWhite: [],
-      capturedBlack: []
+      capturedBlack: [],
+      whiteKing: 60,
+      blackKing: 4,
+      checkKing: false
+    }
+  }
+
+  preMove(i) {
+    const squares = this.state.squares.slice();
+    const whiteKing = this.state.whiteKing;
+    const blackKing = this.state.blackKing;
+    if (this.state.checkKing) {
+      if (this.state.player === 1) {
+        if (this.state.currentSelected === -1 && i !== whiteKing) {
+          console.log('Move King out of check');
+        }
+        if (this.state.currentSelected === whiteKing) {
+          this.movePiece(i);
+        }
+      } else {
+        if (this.state.currentSelected === -1 && i !== blackKing) {
+          console.log('Move King out of check');
+        }
+        else if ((this.state.currentSelected === -1 && i === blackKing) || this.state.currentSelected === blackKing) {
+          this.movePiece(i);
+        } else {
+          console.log('else')
+        }
+      }
+    } else {
+      this.movePiece(i);
     }
   }
 
@@ -20,6 +50,8 @@ export default class Game extends React.Component {
     const squares = this.state.squares.slice();
     const capturedWhite = this.state.capturedWhite.slice();
     const capturedBlack = this.state.capturedBlack.slice();
+    const blackKing = this.state.blackKing;
+    const whiteKing = this.state.whiteKing;
     var player = this.state.player;
 
     var current = squares[this.state.currentSelected];
@@ -34,7 +66,6 @@ export default class Game extends React.Component {
     // piece selected
     else if (this.state.currentSelected > -1) {
       current.style = {...current.style, backgroundColor: ''};
-
       if (current.isMovePossible(this.state.currentSelected, i, squares)) {
         if (squares[i]) {
           if (squares[i].player === 1) {
@@ -45,6 +76,15 @@ export default class Game extends React.Component {
         }
         squares[i] = current;
         squares[this.state.currentSelected] = null;
+
+        var check = this.attackKing(squares[i].attackPaths(i, squares));
+        if (check) {
+          if (player === 1) {
+            squares[blackKing].style = {...squares[blackKing].style, backgroundColor: 'red'};
+          } else {
+            squares[whiteKing].style = {...squares[whiteKing].style, backgroundColor: 'red'};
+          }
+        }
         player = player === 1 ? 2 : 1;
       }
       this.setState({
@@ -52,7 +92,16 @@ export default class Game extends React.Component {
         currentSelected: -1,
         capturedWhite: capturedWhite,
         capturedBlack: capturedBlack,
-        player: player });
+        player: player,
+        checkKing: check });
+    }
+  }
+
+  attackKing(paths) {
+    if (this.state.player === 1) {
+      return paths.indexOf(this.state.blackKing) > -1;
+    } else {
+      return paths.indexOf(this.state.whiteKing) > -1;
     }
   }
 
@@ -66,7 +115,7 @@ export default class Game extends React.Component {
           <Board
             squares={this.state.squares}
             player={this.state.player}
-            onClick={(i) => this.movePiece(i)}
+            onClick={(i) => this.preMove(i)}
             flip={this.state.flip}
             />
         </div>

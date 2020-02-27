@@ -56,20 +56,25 @@ export class Pawn extends Piece {
         return true;
     }
 
-    checkKing(current, squares) {
+    attackPaths(current, squares) {
         let left = 7;
         let right = 9;
-        // only two paths to check king
+        let path = [];
+        // only two paths to attack
         if (this.player === 1) {
             left = left * -1;
             right = right * -1;
         }
         
-        if (squares[current+left] && squares[current+left].piece === 'king' || squares[current+right] && squares[current+right].piece === 'king') {
-            return true;
-        } else {
-            return false;
+        if (!squares[current+left] || squares[current+left].piece === 'king') {
+            path.push(current+left);
         }
+
+        if (!squares[current+right] || squares[current+right].piece === 'king') {
+            path.push(current+right);
+        }
+
+        return path;
     }
 
 }
