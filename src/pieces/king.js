@@ -14,7 +14,14 @@ export class King extends Piece {
 
     isMoveLegal(start, end) {
         let diff = Math.abs(start-end);
-        return (diff === 8 || diff === 1);
+        return (diff === 9|| 
+            diff === 8 || 
+            diff === -7 || 
+            diff === 1 || 
+            diff === 9 || 
+            diff === 8 || 
+            diff === 7 || 
+            diff === -1);
     }
 
     isPathPossible(start, end, squares) {
@@ -22,5 +29,9 @@ export class King extends Piece {
             return squares[end].player !== this.player;
         }
         return true;
+    }
+
+    attackPaths(current, squares) {
+        return [];
     }
 }

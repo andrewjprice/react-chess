@@ -77,7 +77,9 @@ export default class Game extends React.Component {
         squares[i] = current;
         squares[this.state.currentSelected] = null;
 
-        var check = this.attackKing(squares[i].attackPaths(i, squares));
+        if (squares[i].piece !== 'king') {
+          var check = this.attackKing(squares[i].attackPaths(i, squares));
+        }
         if (check) {
           if (player === 1) {
             squares[blackKing].style = {...squares[blackKing].style, backgroundColor: 'red'};
