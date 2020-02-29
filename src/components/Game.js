@@ -50,8 +50,8 @@ export default class Game extends React.Component {
     const squares = this.state.squares.slice();
     const capturedWhite = this.state.capturedWhite.slice();
     const capturedBlack = this.state.capturedBlack.slice();
-    const blackKing = this.state.blackKing;
-    const whiteKing = this.state.whiteKing;
+    var blackKing = this.state.blackKing;
+    var whiteKing = this.state.whiteKing;
     var player = this.state.player;
 
     var current = squares[this.state.currentSelected];
@@ -79,6 +79,12 @@ export default class Game extends React.Component {
 
         if (squares[i].piece !== 'king') {
           var check = this.attackKing(squares[i].attackPaths(i, squares));
+        } else {
+          if (blackKing === this.state.currentSelected) {
+            blackKing = i;
+          } else {
+            whiteKing = i;
+          }
         }
         if (check) {
           if (player === 1) {
@@ -94,6 +100,8 @@ export default class Game extends React.Component {
         currentSelected: -1,
         capturedWhite: capturedWhite,
         capturedBlack: capturedBlack,
+        whiteKing: whiteKing,
+        blackKing: blackKing,
         player: player,
         checkKing: check });
     }
