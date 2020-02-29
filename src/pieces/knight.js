@@ -29,4 +29,56 @@ export class Knight extends Piece {
         }
         return true;
     }
+
+    attackPaths(current, squares) {
+        var path = [];
+        if (!squares[current-6] || squares[current-6].piece === 'king') {
+            path.push(current-6)
+        }
+
+        if (!squares[current+6] || squares[current+6].piece === 'king') {
+            path.push(current+6)
+        }
+
+        if (!squares[current-10] || squares[current-10].piece === 'king') {
+            path.push(current-10)
+        }
+
+        if (!squares[current+10] || squares[current+10].piece === 'king') {
+            path.push(current+10)
+        }
+
+        if (!squares[current-10] || squares[current-10].piece === 'king') {
+            path.push(current-10)
+        }
+
+        if (!squares[current+10] || squares[current+10].piece === 'king') {
+            path.push(current+10)
+        }
+
+        if (!squares[current-10] || squares[current-10].piece === 'king') {
+            path.push(current-10)
+        }
+
+        if (!squares[current+10] || squares[current+10].piece === 'king') {
+            path.push(current+10)
+        }
+
+        if (!squares[current-15] || squares[current-15].piece === 'king') {
+            path.push(current-15)
+        }
+
+        if (!squares[current+15] || squares[current+15].piece === 'king') {
+            path.push(current+15)
+        }
+
+        if (!squares[current-17] || squares[current-17].piece === 'king') {
+            path.push(current-17)
+        }
+
+        if (!squares[current+17] || squares[current+17].piece === 'king') {
+            path.push(current+17)
+        }
+        return path;
+    }
 }
