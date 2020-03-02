@@ -49,4 +49,30 @@ export class Bishop extends Piece {
         }
         return true;
     }
+
+    attackPaths(current, squares) {
+        var path = [];
+        var validDirections = [7,9];
+        validDirections.forEach((i) => {
+            var pos = current+i;
+            var neg = current-i;
+
+            while (pos >= 0 && pos <= 63) {
+                if (!squares[pos] || squares[pos].piece === 'king') {
+                    path.push(pos);
+                }
+                let curPos = pos + i;
+                pos = curPos;
+            }
+
+            while (neg >= 0 && neg <= 63) {
+                if (!squares[neg] || squares[neg].piece === 'king') {
+                    path.push(neg);
+                }
+                let curPos = neg - i;
+                neg = curPos;
+            }
+        });
+        return path;
+    }
 }
