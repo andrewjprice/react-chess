@@ -47,4 +47,61 @@ export class Rook extends Piece {
         }
         return true;
     }
+
+    attackPaths(current, squares) {
+        var path = [];
+        let mod = current % 8;
+        let leftMax = current - mod;
+        let rightMax = current + mod;
+
+        if (this.player === 2) {
+            let leftMax = current + mod;
+            let rightMax = current - mod;
+        }
+
+        // up
+        for (let i=current+8; i<=63; i+=8) {
+            if (squares[i]) {
+                if (squares[i].piece === 'king') {
+                    path.push(i);
+                } else {
+                    break;
+                }
+            }
+        }
+
+        // down
+        for (let i=current-8; i>=0; i+=-8) {
+            if (squares[i]) {
+                if (squares[i].piece === 'king') {
+                    path.push(i);
+                } else {
+                    break;
+                }
+            }
+        }
+
+        // left
+        for (let i=current-1; i>=leftMax; i--) {
+            if (squares[i]) {
+                if (squares[i].piece === 'king') {
+                    path.push(i);
+                } else {
+                    break;
+                }
+            }
+        }
+
+        // right
+        for (let i=current+1; i<=rightMax; i++) {
+            if (squares[i]) {
+                if (squares[i].piece === 'king') {
+                    path.push(i);
+                } else {
+                    break;
+                }
+            }
+        }
+        return path;
+    }
 }
