@@ -4,6 +4,9 @@ import initializeBoard from '../helpers/initializeBoard';
 import Captured from './captured';
 import '../styles/index.css';
 
+import { BitBoard } from '../bitboard/bitboard';
+import { rankBB } from '../bitboard/boards';
+
 export default class Game extends React.Component {
   constructor(props) {
     super();
