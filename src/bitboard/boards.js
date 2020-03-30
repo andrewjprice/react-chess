@@ -15,3 +15,7 @@ export function oneBB() {
 export function rankBB() {
     return makeBB(0xff, 0);
 }
+
+export function idxBB(i) {
+    return makeBB(0,0).setBit(i);
+}

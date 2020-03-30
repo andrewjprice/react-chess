@@ -14,11 +14,13 @@ export default class BitBoard {
     }
 
     setBit(i) {
+        i = u32(i);
         if (i < 32) {
-            this.lower = this.lower | (1 << i);
+            this.lower = u32(this.lower | (1 << i));
         } else {
-            this.upper = this.upper | (1 << (i - 32));
+            this.upper = u32(this.upper | (1 << (i - 32)));
         }
+        return this;
     }
 
     and(other) {
@@ -28,8 +30,9 @@ export default class BitBoard {
     }
 
     or(other) {
-        this.lower = this.lower | other.lower;
-        this.upper = this.upper | other.upper;
+        this.lower = u32(this.lower | other.lower);
+        this.upper = u32(this.upper | other.upper);
+        return this;
     }
 
     not() {
@@ -39,11 +42,11 @@ export default class BitBoard {
 
     shl(i) {
         if (i > 31) {
-            this.upper = this.lower << (i - 32);
+            this.upper = u32(this.lower << (i - 32));
             this.lower = 0;
         } else if (i > 0) {
-            this.upper = (this.upper << i) | (this.lower >>> (32 - i));
-            this.lower = this.lower << i;
+            this.upper = u32((this.upper << i) | (this.lower >>> (32 - i)));
+            this.lower = u32(this.lower << i);
         }
         return this;
     }
