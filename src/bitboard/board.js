@@ -1,7 +1,7 @@
 import { rankBB, idxBB } from './boards';
 
 /* bitboard board definition */
-export default class BBoard {
+export default class BoardState {
     constructor() {
         this.whitePawns = rankBB().shl(8);
         this.whiteRooks = idxBB(0).or(idxBB(7));
@@ -17,10 +17,8 @@ export default class BBoard {
         this.blackQueen = idxBB(59);
         this.blackKing = idxBB(60);
 
-        this.whitePieces = this.whitePawns.lower | this.whiteRooks.lower | this.whiteKnights.lower |
-                           this.whiteBishops.lower | this.whiteQueen.lower | this.whiteKing.lower;
-
-        this.blackPieces = this.blackPawns.upper | this.blackRooks.upper | this.blackKnights.upper |
-                            this.blackBishops.upper | this.blackQueen.upper | this.blackKing.upper;
+        this.whitePieces = this.whitePawns.or(this.whiteRooks).or(this.whiteKnights).or(this.whiteBishops).or(this.whiteQueen).or(this.whiteKing);
+        this.blackPieces = this.blackPawns.or(this.blackRooks).or(this.blackKnights).or(this.blackBishops).or(this.blackQueen).or(this.blackKing);
+        this.allPieces = this.whitePieces.or(this.blackPieces);
     }
 }
