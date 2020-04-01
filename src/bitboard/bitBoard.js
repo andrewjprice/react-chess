@@ -38,6 +38,7 @@ export default class BitBoard {
     not() {
         this.lower = u32(~this.lower);
         this.upper = u32(~this.upper);
+        return this;
     }
 
     shl(i) {
