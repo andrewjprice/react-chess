@@ -2,17 +2,19 @@ import { idxBB, fileMasks } from './boards';
 
 export function kingAttacks(i) {
     /* file overflow/underflow */
-    const leftMask = fileMasks()[0];
-    const rightMask = fileMasks()[7];
+    const notAFile = fileMasks()[0].not();
+    const notHFile = fileMasks()[7].not();
 
-    let center = idxBB(i).and(leftMask.not()).and(rightMask.not());
-    let eastWest = center.copy().shr(1).or(center.copy().shl(1));
-    let northSouth = center.copy().shl(8).or(center.copy().shr(8));
+    let idx = idxBB(i);
+    let left = idx.copy().shr(1).and(notHFile);
+    let right = idx.copy().shl(1).and(notAFile);
+    let up = idx.copy().shr(8);
+    let down = idx.copy().shl(8);
 
-    return eastWest.or(northSouth);
+    return left.or(right).or(up).or(down);
 }
 
-export function kingAttacksArray() {
+export function kingAttacksArr() {
     let attacks = [];
     for (let i=0; i<64; i++) {
         attacks.push(kingAttacks(i));
