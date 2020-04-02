@@ -47,3 +47,21 @@ export function knightAttacksArr() {
     }
     return attacks;
 }
+
+export function pawnAttacks(i, color) {
+    const notAFile = fileMasks()[0].not();
+    const notHFile = fileMasks()[7].not();
+
+    let idx = idxBB(i);
+    let left = idx.copy();
+    let right = idx.copy();
+
+    if (color == 'white') {
+        left = left.shl(7).and(notHFile);
+        right = right.shl(9).and(notAFile);
+    } else {
+        left = left.shr(9).and(notAFile);
+        right = right.shr(7).and(notHFile);
+    }
+    return left.or(right);
+}
