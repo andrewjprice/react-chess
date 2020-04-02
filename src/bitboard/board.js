@@ -1,4 +1,4 @@
-import { rankBB, idxBB } from './boards';
+import { rankBB, idxBB } from './utils/boards';
 
 /* bitboard board definition */
 export default class BoardState {

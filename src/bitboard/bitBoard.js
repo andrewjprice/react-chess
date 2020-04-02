@@ -1,7 +1,7 @@
 /*
     Represents a 64 bit unsigned int.
 */
-import { u32 } from './32bit';
+import { u32 } from './utils/32bit';
 
 export default class BitBoard {
     constructor(lower, upper) {

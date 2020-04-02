@@ -1,4 +1,4 @@
-import { idxBB, fileMasks } from './boards';
+import { idxBB, fileMasks } from './utils/boards';
 
 export function kingAttacks(i) {
     /* file overflow/underflow */
