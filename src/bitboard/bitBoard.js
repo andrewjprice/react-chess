@@ -1,7 +1,7 @@
 /*
     Represents a 64 bit unsigned int.
 */
-import { u32 } from './utils/32bit';
+import { u32, bitScanForward } from './utils/32bit';
 
 export default class BitBoard {
     constructor(lower, upper) {
@@ -61,5 +61,13 @@ export default class BitBoard {
             this.upper = this.upper >>> i;
         }
         return this;
+    }
+
+    lsb() {
+        if (this.lower) {
+            return bitScanForward(this.lower);
+        } else {
+            return 32 + bitScanForward(this.upper);
+        }
     }
 }
