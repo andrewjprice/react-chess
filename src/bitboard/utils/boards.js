@@ -10,6 +10,7 @@ export {
     fileBB,
     fileMasks,
     northAttack,
+    eastAttack,
 };
 
 function makeBB(lower, upper) {
@@ -68,6 +69,21 @@ function northAttack() {
     for (let i=0; i<64; i++) {
         attacks.push(nort.copy());
         nort.shl(1)
+    }
+
+    return attacks;
+}
+
+function eastAttack() {
+    let mask = makeBB(0xff, 0);
+    let attacks = [];
+
+    for (let i=0; i<8; i++) {
+        let rankMask = mask.copy().shl(i*8);
+        for (let j=0; j<8; j++) {
+            let ea = rankMask.copy().shl(j).and(rankMask);
+            attacks.push(ea);
+        }
     }
 
     return attacks;
