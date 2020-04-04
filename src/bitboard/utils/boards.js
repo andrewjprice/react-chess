@@ -8,7 +8,8 @@ export {
     rankBB,
     rankMasks,
     fileBB,
-    fileMasks
+    fileMasks,
+    northAttack,
 };
 
 function makeBB(lower, upper) {
@@ -54,4 +55,20 @@ function fileMasks() {
         files.push(fileBB(i))
     }
     return files;
+}
+
+/* ray attacks */
+/* https://www.chessprogramming.org/On_an_empty_Board#Ray_Attacks */
+
+/* positive rays */
+function northAttack() {
+    var nort = makeBB(0x01010101, 0x01010101);
+    let attacks = [];
+
+    for (let i=0; i<64; i++) {
+        attacks.push(nort.copy());
+        nort.shl(1)
+    }
+
+    return attacks;
 }
