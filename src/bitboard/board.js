@@ -17,8 +17,20 @@ export default class BoardState {
         this.blackQueen = idxBB(59);
         this.blackKing = idxBB(60);
 
-        this.whitePieces = this.whitePawns.or(this.whiteRooks).or(this.whiteKnights).or(this.whiteBishops).or(this.whiteQueen).or(this.whiteKing);
-        this.blackPieces = this.blackPawns.or(this.blackRooks).or(this.blackKnights).or(this.blackBishops).or(this.blackQueen).or(this.blackKing);
+        this.whitePieces = this.whitePawns.copy().or(
+                           this.whiteRooks.copy()).or(
+                           this.whiteKnights.copy()).or(
+                           this.whiteBishops.copy()).or(
+                           this.whiteQueen.copy()).or(
+                           this.whiteKing.copy());
+
+        this.blackPieces = this.blackPawns.copy().or(
+                           this.blackRooks.copy()).or(
+                           this.blackKnights.copy()).or(
+                           this.blackBishops.copy()).or(
+                           this.blackQueen.copy()).or(
+                           this.blackKing.copy());
+
         this.allPieces = this.whitePieces.or(this.blackPieces);
     }
 }
