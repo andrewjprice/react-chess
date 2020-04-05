@@ -12,6 +12,7 @@ export {
     northAttack,
     eastAttack,
     noweAttack,
+    noeaAttack,
 };
 
 function makeBB(lower, upper) {
@@ -103,6 +104,25 @@ function noweAttack() {
                 nw.shr(1).and(notHFile);
             }
             attacks.push(nw.copy());
+        }
+    }
+
+    return attacks;
+}
+
+function noeaAttack() {
+    const notAFile = makeBB(0xfefefefe, 0xfefefefe);
+    const midDiag = makeBB(0x08040201, 0x80402010);
+    let attacks = [];
+
+    for (var rank=0; rank<8; rank++) {
+        let ne = midDiag.copy().shl(rank * 8);
+
+        for (var file=0; file<8; file++) {
+            if (file > 0) {
+                ne.shl(1).and(notAFile);
+            }
+            attacks.push(ne.copy());
         }
     }
 
