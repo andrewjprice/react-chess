@@ -11,6 +11,7 @@ export {
     fileMasks,
     northAttack,
     eastAttack,
+    noweAttack,
 };
 
 function makeBB(lower, upper) {
@@ -83,6 +84,25 @@ function eastAttack() {
         for (let j=0; j<8; j++) {
             let ea = rankMask.copy().shl(j).and(rankMask);
             attacks.push(ea);
+        }
+    }
+
+    return attacks;
+}
+
+function noweAttack() {
+    const notHFile = makeBB(0x7f7f7f7f, 0x7f7f7f7f);
+    const midDiag = makeBB(0x10204080, 0x01020408);
+    let attacks = [];
+
+    for (var rank=0; rank<8; rank++) {
+        let nw = midDiag.copy().shl(rank * 8);
+
+        for (var file=0; file<8; file++) {
+            if (file > 0) {
+                nw.shr(1).and(notHFile);
+            }
+            attacks.push(nw.copy());
         }
     }
 
