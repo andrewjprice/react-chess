@@ -13,6 +13,7 @@ export {
     eastAttack,
     noweAttack,
     noeaAttack,
+    southAttack,
 };
 
 function makeBB(lower, upper) {
@@ -124,6 +125,19 @@ function noeaAttack() {
             }
             attacks.push(ne.copy());
         }
+    }
+
+    return attacks;
+}
+
+/* negative rays */
+function southAttack() {
+    const sout = makeBB(0x00808080, 0x80808080);
+    let attacks = new Array(63);
+
+    for (let i=63; i>=0; i--) {
+        attacks[i] = sout.copy();
+        sout.shr(1);
     }
 
     return attacks;
