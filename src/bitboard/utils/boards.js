@@ -14,6 +14,7 @@ export {
     noweAttack,
     noeaAttack,
     southAttack,
+    westAttack
 };
 
 function makeBB(lower, upper) {
@@ -138,6 +139,21 @@ function southAttack() {
     for (let i=63; i>=0; i--) {
         attacks[i] = sout.copy();
         sout.shr(1);
+    }
+
+    return attacks;
+}
+
+function westAttack() {
+    let mask = makeBB(0xff, 0);
+    let attacks = [];
+
+    for (let rank=0; rank<8; rank++) {
+        let westRank = mask.copy().shl(rank*8);
+        for (let file=7; file>=0; file--) {
+            let west = westRank.copy().shr(file).and(westRank.copy());
+            attacks.push(west);
+        }
     }
 
     return attacks;
