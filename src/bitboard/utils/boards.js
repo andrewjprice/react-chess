@@ -14,7 +14,8 @@ export {
     noweAttack,
     noeaAttack,
     southAttack,
-    westAttack
+    westAttack,
+    soweAttack,
 };
 
 function makeBB(lower, upper) {
@@ -154,6 +155,17 @@ function westAttack() {
             let west = westRank.copy().shr(file).and(westRank.copy());
             attacks.push(west);
         }
+    }
+
+    return attacks;
+}
+
+function soweAttack() {
+    const midDiag = makeBB(0x08040201, 0x80402010);
+    let attacks = new Array(63);
+
+    for (let i=63; i>=0; i--) {
+        attacks[63-i] = midDiag.copy().shr(i);
     }
 
     return attacks;
