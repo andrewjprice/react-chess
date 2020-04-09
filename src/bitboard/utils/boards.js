@@ -16,6 +16,7 @@ export {
     southAttack,
     westAttack,
     soweAttack,
+    soeaAttack
 };
 
 function makeBB(lower, upper) {
@@ -166,6 +167,23 @@ function soweAttack() {
 
     for (let i=63; i>=0; i--) {
         attacks[63-i] = midDiag.copy().shr(i);
+    }
+
+    return attacks;
+}
+
+function soeaAttack() {
+    const notAFile = makeBB(0xfefefefe, 0xfefefefe);
+    const midDiag = makeBB(0x10204080, 0x01020408);
+    let attacks = [];
+
+    for (let i=56; i>=0; i--) {
+        attacks.push(midDiag.copy().shr(i));
+    }
+    let se = midDiag.copy();
+
+    for (let i=0; i<7; i++) {
+        attacks.push(se.shl(1).and(notAFile).copy());
     }
 
     return attacks;
