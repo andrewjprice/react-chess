@@ -35,6 +35,12 @@ export default class BitBoard {
         return this;
     }
 
+    xor(other) {
+        this.lower = u32(this.lower ^ other.lower);
+        this.upper = u32(this.upper ^ other.upper);
+        return this;
+    }
+
     not() {
         this.lower = u32(~this.lower);
         this.upper = u32(~this.upper);
