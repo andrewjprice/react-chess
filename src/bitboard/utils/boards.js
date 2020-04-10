@@ -98,16 +98,15 @@ function eastAttack() {
 function noweAttack() {
     const notHFile = makeBB(0x7f7f7f7f, 0x7f7f7f7f);
     const midDiag = makeBB(0x10204080, 0x01020408);
-    let attacks = [];
+    let attacks = new Array(63);
 
-    for (var rank=0; rank<8; rank++) {
-        let nw = midDiag.copy().shl(rank * 8);
-
-        for (var file=0; file<8; file++) {
-            if (file > 0) {
-                nw.shr(1).and(notHFile);
+    for (let r=0; r<=8*8; r+=8) {
+        let nowe = midDiag.copy().shl(r);
+        for (let f=7; f>=0; f--) {
+            if (f<7) {
+                nowe.shr(1).and(notHFile);
             }
-            attacks.push(nw.copy());
+            attacks[r+f] = nowe.copy();
         }
     }
 
@@ -135,7 +134,7 @@ function noeaAttack() {
 
 /* negative rays */
 function southAttack() {
-    const sout = makeBB(0x00808080, 0x80808080);
+    const sout = makeBB(0x80808080, 0x80808080);
     let attacks = new Array(63);
 
     for (let i=63; i>=0; i--) {
@@ -178,12 +177,14 @@ function soeaAttack() {
     let attacks = [];
 
     for (let i=56; i>=0; i--) {
-        attacks.push(midDiag.copy().shr(i));
+        attacks.push(midDiag.copy().shr(i).and(notAFile));
     }
+
     let se = midDiag.copy();
 
     for (let i=0; i<7; i++) {
-        attacks.push(se.shl(1).and(notAFile).copy());
+        se.shl(1)
+        attacks.push(se.copy().and(notAFile));
     }
 
     return attacks;
