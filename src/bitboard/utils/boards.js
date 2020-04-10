@@ -9,14 +9,14 @@ export {
     rankMasks,
     fileBB,
     fileMasks,
-    northAttack,
-    eastAttack,
-    noweAttack,
-    noeaAttack,
-    southAttack,
-    westAttack,
-    soweAttack,
-    soeaAttack
+    northRays,
+    eastRays,
+    nwRays,
+    neRays,
+    southRays,
+    westRays,
+    swRays,
+    seRays
 };
 
 function makeBB(lower, upper) {
@@ -68,124 +68,122 @@ function fileMasks() {
 /* https://www.chessprogramming.org/On_an_empty_Board#Ray_Attacks */
 
 /* positive rays */
-function northAttack() {
+function northRays() {
     var nort = makeBB(0x01010101, 0x01010101);
-    let attacks = [];
+    let rays = [];
 
     for (let i=0; i<64; i++) {
-        attacks.push(nort.copy());
+        rays.push(nort.copy());
         nort.shl(1)
     }
 
-    return attacks;
+    return rays;
 }
 
-function eastAttack() {
+function eastRays() {
     let mask = makeBB(0xff, 0);
-    let attacks = [];
+    let rays = [];
 
-    for (let i=0; i<8; i++) {
-        let rankMask = mask.copy().shl(i*8);
-        for (let j=0; j<8; j++) {
-            let ea = rankMask.copy().shl(j).and(rankMask);
-            attacks.push(ea);
+    for (let r=0; r<8; r++) {
+        let rankMask = mask.copy().shl(r*8);
+        for (let f=0; f<8; f++) {
+            rays.push(rankMask.copy().shl(f).and(rankMask));
         }
     }
 
-    return attacks;
+    return rays;
 }
 
-function noweAttack() {
+function nwRays() {
     const notHFile = makeBB(0x7f7f7f7f, 0x7f7f7f7f);
     const midDiag = makeBB(0x10204080, 0x01020408);
-    let attacks = new Array(63);
+    let rays = new Array(63);
 
     for (let r=0; r<=8*8; r+=8) {
-        let nowe = midDiag.copy().shl(r);
+        let nw = midDiag.copy().shl(r);
         for (let f=7; f>=0; f--) {
             if (f<7) {
-                nowe.shr(1).and(notHFile);
+                nw.shr(1).and(notHFile);
             }
-            attacks[r+f] = nowe.copy();
+            rays[r+f] = nw.copy();
         }
     }
 
-    return attacks;
+    return rays;
 }
 
-function noeaAttack() {
+function neRays() {
     const notAFile = makeBB(0xfefefefe, 0xfefefefe);
     const midDiag = makeBB(0x08040201, 0x80402010);
-    let attacks = [];
+    let rays = [];
 
-    for (var rank=0; rank<8; rank++) {
-        let ne = midDiag.copy().shl(rank * 8);
-
-        for (var file=0; file<8; file++) {
-            if (file > 0) {
+    for (var r=0; r<8; r++) {
+        let ne = midDiag.copy().shl(r * 8);
+        for (var f=0; f<8; f++) {
+            if (f > 0) {
                 ne.shl(1).and(notAFile);
             }
-            attacks.push(ne.copy());
+            rays.push(ne.copy());
         }
     }
 
-    return attacks;
+    return rays;
 }
 
 /* negative rays */
-function southAttack() {
+function southRays() {
     const sout = makeBB(0x80808080, 0x80808080);
-    let attacks = new Array(63);
+    let rays = new Array(63);
 
     for (let i=63; i>=0; i--) {
-        attacks[i] = sout.copy();
+        rays[i] = sout.copy();
         sout.shr(1);
     }
 
-    return attacks;
+    return rays;
 }
 
-function westAttack() {
+function westRays() {
     let mask = makeBB(0xff, 0);
-    let attacks = [];
+    let rays = [];
 
-    for (let rank=0; rank<8; rank++) {
-        let westRank = mask.copy().shl(rank*8);
-        for (let file=7; file>=0; file--) {
-            let west = westRank.copy().shr(file).and(westRank.copy());
-            attacks.push(west);
+    for (let r=0; r<8; r++) {
+        let westRank = mask.copy().shl(r*8);
+        for (let f=7; f>=0; f--) {
+            let west = westRank.copy().shr(f).and(westRank.copy());
+            rays.push(west);
         }
     }
 
-    return attacks;
+    return rays;
 }
 
-function soweAttack() {
+function swRays() {
     const midDiag = makeBB(0x08040201, 0x80402010);
-    let attacks = new Array(63);
+    let rays = new Array(63);
 
     for (let i=63; i>=0; i--) {
-        attacks[63-i] = midDiag.copy().shr(i);
+        rays[63-i] = midDiag.copy().shr(i);
     }
 
-    return attacks;
+    return rays;
 }
 
-function soeaAttack() {
+function seRays() {
     const notAFile = makeBB(0xfefefefe, 0xfefefefe);
     const midDiag = makeBB(0x10204080, 0x01020408);
-    let attacks = [];
+    let rays = [];
 
     for (let i=56; i>=0; i--) {
-        attacks.push(midDiag.copy().shr(i).and(notAFile));
+        rays.push(midDiag.copy().shr(i).and(notAFile));
     }
 
     let se = midDiag.copy();
 
     for (let i=0; i<7; i++) {
         se.shl(1)
-        attacks.push(se.copy().and(notAFile));
+        rays.push(se.copy().and(notAFile));
     }
 
-    return attacks;
+    return rays;
 }
