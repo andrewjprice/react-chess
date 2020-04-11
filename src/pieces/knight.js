@@ -9,38 +9,4 @@ export class Knight extends Piece {
         this.player = player;
         this.validMoves = [6, 10, 15, 17];
     }
-
-    isMovePossible(current, destination, squares) {
-        var destinationSquare = squares[destination];
-        return this.isMoveLegal(current, destination) && this.movePath(destinationSquare);
-    }
-
-    isMoveLegal(start, end) {
-        if (this.validMoves.indexOf(Math.abs(start - end)) > -1) {
-            return true
-        } else {
-            return false;
-        }
-    }
-
-    movePath(destinationSquare) {
-        if (destinationSquare) {
-            return destinationSquare.player !== this.player;
-        }
-        return true;
-    }
-
-    attackPaths(current, squares) {
-        var path = [];
-
-        this.validMoves.forEach((i) => {
-            if (!squares[current-i] || squares[current-i].piece === 'king') {
-                path.push(current-i)
-            }
-            if (!squares[current+i] || squares[current+i].piece === 'king') {
-                path.push(current+i)
-            }
-        });
-        return path;
-    }
 }

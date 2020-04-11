@@ -7,31 +7,4 @@ export class King extends Piece {
         super(player, (player === 1 ? light : dark));
         this.piece = 'king';
     }
-
-    isMovePossible(current, destination, squares) {
-        return this.isMoveLegal(current, destination) && this.isPathPossible(current, destination, squares);
-    }
-
-    isMoveLegal(start, end) {
-        let diff = Math.abs(start-end);
-        return (diff === 9|| 
-            diff === 8 || 
-            diff === -7 || 
-            diff === 1 || 
-            diff === 9 || 
-            diff === 8 || 
-            diff === 7 || 
-            diff === -1);
-    }
-
-    isPathPossible(start, end, squares) {
-        if (squares[end]) {
-            return squares[end].player !== this.player;
-        }
-        return true;
-    }
-
-    attackPaths(current, squares) {
-        return [];
-    }
 }
