@@ -1,6 +1,6 @@
 import React from 'react';
 import Square from './square';
-import Piece from '../pieces/piece';
+import Piece from './piece';
 import '../styles/index.css';
 
 export default class Board extends React.Component {
