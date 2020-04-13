@@ -1,20 +1,16 @@
 import React from 'react';
 import Square from './square';
+import Piece from '../pieces/piece';
 import '../styles/index.css';
 
 export default class Board extends React.Component {
   renderSquare(index, shade) {
-    let current = index;
+    let square = this.props.squares[index];
 
-    if (this.props.flip) {
-      current = this.props.squares.length - current - 1;
-    }
     return (
-      <Square
-        style={this.props.squares[current] ? this.props.squares[current].style : null}
-        shade={shade}
-        onClick={() => this.props.onClick(current)}
-      />
+      <Square shade={shade} move={this.props.movePiece} pos={index} key={index}>
+        <Piece icon={square.icon} pos={square.pos} />
+      </Square>
     )
   }
 
@@ -27,7 +23,7 @@ export default class Board extends React.Component {
         let square = this.renderSquare((i*8)+j, shade);
         row.push(square);
       }
-      board.push(<div>{row}</div>);
+      board.push(<div key={i}>{row}</div>);
     }
     return (
       <div>{board}</div>

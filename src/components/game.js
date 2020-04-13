@@ -1,7 +1,8 @@
 import React from 'react';
 import Board from './board';
 import initializeBoard from '../helpers/initializeBoard';
-import Captured from './captured';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import '../styles/index.css';
 
 export default class Game extends React.Component {
@@ -14,36 +15,24 @@ export default class Game extends React.Component {
     }
   }
 
-  movePiece(i) {
+  movePiece(from, to) {
     const squares = this.state.squares.slice();
-
-    var current = squares[this.state.currentSelected];
-
-    // no piece selected
-    if (this.state.currentSelected === -1) {
-      if (squares[i] && squares[i].player === this.state.player) {
-        squares[i].style = {...squares[i].style, backgroundColor: 'gold'};
-        this.setState({ currentSelected: i });
-      }
-    }
-    // piece selected
-    else if (this.state.currentSelected > -1) {
-      current.style = {...current.style, backgroundColor: ''};
-      squares[i] = current;
-      squares[this.state.currentSelected] = null;
-      this.setState({ squares: squares, currentSelected: -1 });
-    }
+    squares[to] = { icon: squares[from].icon };
+    squares[from] = { icon: '' };
+    this.setState({ squares: squares });
   }
 
   render() {
     return (
       <div className="board-container">
         <div>
-          <Board
-            squares={this.state.squares}
-            player={this.state.player}
-            onClick={(i) => this.movePiece(i)}
+          <DndProvider backend={HTML5Backend}>
+            <Board
+              squares={this.state.squares}
+              player={this.state.player}
+              movePiece={(from, to) => this.movePiece(from, to)}
             />
+          </DndProvider>
         </div>
       </div>
     )

@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useDrop } from 'react-dnd';
 import '../styles/index.css';
 
-export default function Square(props) {
+function Square({ move, shade, pos, children }) {
+    const ref = useRef(null);
+    const [, drop] = useDrop({
+        accept: 'piece',
+        drop(piece) {
+            move(piece.pos, pos)
+        }
+    });
+    drop(ref);
+
     return (
-        <button 
-            className={'square ' + props.shade}
-            onClick={props.onClick}
-            style={props.style}>
-        </button>
+        <div ref={ref} className={'square ' + shade}>{children}</div>
     )
 }
+
+export default Square;

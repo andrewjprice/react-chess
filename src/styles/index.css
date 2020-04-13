@@ -55,3 +55,9 @@ code {
 .dark-shade {
   background-color: #855e42;
 }
+
+.piece {
+  display: block;
+  height: 40px;
+  width: 40px;
+}
