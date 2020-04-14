@@ -17,8 +17,8 @@ export default class Game extends React.Component {
 
   movePiece(from, to) {
     const squares = this.state.squares.slice();
-    squares[to] = { icon: squares[from].icon, pos: to };
-    squares[from] = { icon: '', pos: from };
+    squares[to] = squares[from];
+    squares[from] = null;
     this.setState({ squares: squares });
   }
 

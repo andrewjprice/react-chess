@@ -9,7 +9,7 @@ export default class Board extends React.Component {
 
     return (
       <Square shade={shade} move={this.props.movePiece} pos={index} key={index}>
-        <Piece icon={square.icon} pos={square.pos} />
+        <Piece pos={index}>{square}</Piece>
       </Square>
     )
   }
