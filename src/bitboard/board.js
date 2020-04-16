@@ -1,36 +1,40 @@
 import { rankBB, idxBB } from './utils/boards';
+import { PIECES } from '../constants/index';
 
 /* bitboard board definition */
 export default class BoardState {
     constructor() {
-        this.whitePawns = rankBB(1);
-        this.whiteRooks = idxBB(0).or(idxBB(7));
-        this.whiteKnights = idxBB(1).or(idxBB(6));
-        this.whiteBishops = idxBB(2).or(idxBB(5));
-        this.whiteQueen = idxBB(3);
-        this.whiteKing = idxBB(4);
+        this.board = [
+            rankBB(1).or(rankBB(6)), // pawns
+            idxBB(0).or(idxBB(7)).or(idxBB(56)).or(idxBB(63)), // rooks
+            idxBB(1).or(idxBB(6)).or(idxBB(57)).or(idxBB(62)), // knights
+            idxBB(2).or(idxBB(5)).or(idxBB(58)).or(idxBB(61)), // bishops
+            idxBB(3).or(idxBB(59)), // queens
+            idxBB(4).or(idxBB(60)), // kings
+            rankBB(0).or(rankBB(1)), // white pieces
+            rankBB(6).or(rankBB(7)), // black pieces
+        ];
 
-        this.blackPawns = rankBB(6);
-        this.blackRooks = idxBB(56).or(idxBB(63));
-        this.blackKnights = idxBB(57).or(idxBB(62));
-        this.blackBishops = idxBB(58).or(idxBB(61));
-        this.blackQueen = idxBB(59);
-        this.blackKing = idxBB(60);
+        this.pieces = this.initPieces();
+    }
 
-        this.whitePieces = this.whitePawns.copy().or(
-                           this.whiteRooks.copy()).or(
-                           this.whiteKnights.copy()).or(
-                           this.whiteBishops.copy()).or(
-                           this.whiteQueen.copy()).or(
-                           this.whiteKing.copy());
+    initPieces() {
+        let pieces = [];
 
-        this.blackPieces = this.blackPawns.copy().or(
-                           this.blackRooks.copy()).or(
-                           this.blackKnights.copy()).or(
-                           this.blackBishops.copy()).or(
-                           this.blackQueen.copy()).or(
-                           this.blackKing.copy());
+        for (let i=0; i<64; i++) {
+            pieces[i] = this.getPiece(i);
+        }
 
-        this.allPieces = this.whitePieces.or(this.blackPieces);
+        return pieces;
+    }
+
+    getPiece(idx) {
+        for (let piece=PIECES.pawn; piece<=PIECES.king; piece++) {
+            if (this.board[piece].hasBB(idx)) {
+                return piece;
+            }
+        }
+
+        return null;
     }
 }

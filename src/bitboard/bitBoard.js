@@ -23,6 +23,16 @@ export default class BitBoard {
         return this;
     }
 
+    hasBB(i) {
+        i = u32(i);
+
+        if (i < 32) {
+            return !(!(this.lower & (1 << i)));
+        } else {
+            return !(!(this.upper & (1 << (i - 32))));
+        }
+    }
+
     and(other) {
         this.lower = u32(this.lower & other.lower);
         this.upper = u32(this.upper & other.upper);
