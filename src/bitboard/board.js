@@ -37,4 +37,25 @@ export default class BoardState {
 
         return null;
     }
+
+    getColor(idx) {
+        if (this.board[PIECES.white].hasBB(idx)) {
+            return [PIECES.white, 0];
+        } else if (this.board[PIECES.black].hasBB(idx)) {
+            return [PIECES.black, 1];
+        }
+        return null;
+    }
+
+    validateMove(from, to) {
+        let piece = this.getPiece(from);
+        let color = this.getColor(from);
+
+        if (piece === 0) {
+            // pawn push
+            let singlePushTargets = this.board[color[0]].copy().and(this.board[0]).shl(8).shr(color[1]<<4);
+            return singlePushTargets.hasBB(to);
+        }
+        return false;
+    }
 }
