@@ -1,5 +1,6 @@
 import { rankBB, idxBB } from './utils/boards';
 import { PIECES } from '../constants/index';
+import Move from './move';
 
 /* bitboard board definition */
 export default class BoardState {
@@ -29,7 +30,7 @@ export default class BoardState {
     }
 
     getPiece(idx) {
-        for (let piece=PIECES.pawn; piece<=PIECES.king; piece++) {
+        for (let piece=PIECES.PWAN; piece<=PIECES.KING; piece++) {
             if (this.board[piece].hasBB(idx)) {
                 return piece;
             }
@@ -39,10 +40,10 @@ export default class BoardState {
     }
 
     getColor(idx) {
-        if (this.board[PIECES.white].hasBB(idx)) {
-            return [PIECES.white, 0];
-        } else if (this.board[PIECES.black].hasBB(idx)) {
-            return [PIECES.black, 1];
+        if (this.board[PIECES.WHITE].hasBB(idx)) {
+            return [PIECES.WHITE, 0];
+        } else if (this.board[PIECES.BLACK].hasBB(idx)) {
+            return [PIECES.BLACK, 1];
         }
         return null;
     }
@@ -55,15 +56,16 @@ export default class BoardState {
         this.pieces[to] = piece;
     }
 
-    validateMove(from, to) {
-        let piece = this.getPiece(from);
-        let color = this.getColor(from);
+    getPieceMoves(src, piece) {
+        let moves = [];
+        let piece = this.getPiece(src);
+        let color = this.getColor(src);
 
-        if (piece === 0) {
+        if (piece === PIECES.PAWN) {
             // pawn push
             let singlePushTargets = this.board[color[0]].copy().and(this.board[0]).shl(8).shr(color[1]<<4);
-            return singlePushTargets.hasBB(to);
         }
-        return false;
+
+        return moves;
     }
 }
