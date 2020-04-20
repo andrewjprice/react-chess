@@ -1,6 +1,6 @@
 import { rankBB, idxBB } from './utils/boards';
 import { PIECES } from '../constants/index';
-import { pawnAttacks } from '../bitboard/attackBoards';
+import { pawnAttacks, knightAttacksArr } from '../bitboard/attackBoards';
 import Move from './move';
 
 /* bitboard board definition */
@@ -69,6 +69,10 @@ export default class BoardState {
             let doublePush = idx.copy().shl(16).shr(i<<4);
             let attack = pawnAttacks(src, color);
             moves.push(singlePush.or(doublePush).or(attack));
+        }
+        else if (piece === PIECES.KNIGHT) {
+            let attack = knightAttacksArr()[src];
+            moves.push(attack);
         }
 
         return moves;
