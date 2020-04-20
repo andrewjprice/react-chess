@@ -1,4 +1,5 @@
 import { idxBB, fileMasks } from './utils/boards';
+import { PIECES } from '../constants/index';
 
 export function kingAttacks(i) {
     /* file overflow/underflow */
@@ -56,7 +57,7 @@ export function pawnAttacks(i, color) {
     let left = idx.copy();
     let right = idx.copy();
 
-    if (color == 'white') {
+    if (color == PIECES.WHITE) {
         left = left.shl(7).and(notHFile);
         right = right.shl(9).and(notAFile);
     } else {

@@ -1,5 +1,6 @@
 import { rankBB, idxBB } from './utils/boards';
 import { PIECES } from '../constants/index';
+import { pawnAttacks } from '../bitboard/attackBoards';
 import Move from './move';
 
 /* bitboard board definition */
@@ -30,7 +31,7 @@ export default class BoardState {
     }
 
     getPiece(idx) {
-        for (let piece=PIECES.PWAN; piece<=PIECES.KING; piece++) {
+        for (let piece=PIECES.PAWN; piece<=PIECES.KING; piece++) {
             if (this.board[piece].hasBB(idx)) {
                 return piece;
             }
@@ -56,14 +57,18 @@ export default class BoardState {
         this.pieces[to] = piece;
     }
 
-    getPieceMoves(src, piece) {
+    /* psuedo-legal moves */
+    getPieceMoves(src) {
         let moves = [];
         let piece = this.getPiece(src);
-        let color = this.getColor(src);
+        let [color, i] = this.getColor(src);
 
         if (piece === PIECES.PAWN) {
-            // pawn push
-            let singlePushTargets = this.board[color[0]].copy().and(this.board[0]).shl(8).shr(color[1]<<4);
+            let idx = idxBB(src);
+            let singlePush = idx.copy().shl(8).shr(i<<4);
+            let doublePush = idx.copy().shl(16).shr(i<<4);
+            let attack = pawnAttacks(src, color);
+            moves.push(singlePush.or(doublePush).or(attack));
         }
 
         return moves;
