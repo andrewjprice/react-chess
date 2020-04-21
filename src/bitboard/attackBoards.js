@@ -1,4 +1,14 @@
 import { idxBB, fileMasks } from './utils/boards';
+import {
+    northRays,
+    eastRays,
+    nwRays,
+    neRays,
+    southRays,
+    westRays,
+    swRays,
+    seRays } from './utils/boards';
+
 import { PIECES } from '../constants/index';
 
 export function kingAttacks(i) {
@@ -65,4 +75,8 @@ export function pawnAttacks(i, color) {
         right = right.shr(7).and(notHFile);
     }
     return left.or(right);
+}
+
+export function diagonalAttacks(i) {
+    return nwRays()[i].copy().or(neRays()[i]).or(swRays()[i]).or(seRays()[i]);
 }
