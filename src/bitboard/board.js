@@ -1,6 +1,6 @@
 import { rankBB, idxBB } from './utils/boards';
 import { PIECES } from '../constants/index';
-import { pawnAttacks, knightAttacksArr } from '../bitboard/attackBoards';
+import { pawnAttacks, knightAttacksArr, kingAttacksArr } from '../bitboard/attackBoards';
 import Move from './move';
 
 /* bitboard board definition */
@@ -73,6 +73,10 @@ export default class BoardState {
         else if (piece === PIECES.KNIGHT) {
             let attack = knightAttacksArr()[src];
             moves.push(attack);
+        }
+        else if (piece === PIECES.KING) {
+            let attack = kingAttacksArr()[src];
+            moves.push(attack)
         }
 
         return moves;
