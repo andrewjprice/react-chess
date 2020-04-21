@@ -80,3 +80,11 @@ export function pawnAttacks(i, color) {
 export function diagonalAttacks(i) {
     return nwRays()[i].copy().or(neRays()[i]).or(swRays()[i]).or(seRays()[i]);
 }
+
+export function rankAttacks(i) {
+    return eastRays()[i].copy().or(westRays()[i]);
+}
+
+export function fileAttacks(i) {
+    return northRays()[i].copy().or(southRays()[i]);
+}
