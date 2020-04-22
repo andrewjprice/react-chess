@@ -57,8 +57,8 @@ export default class BoardState {
 
     move(piece, color, from, to) {
         let fromToBB = idxBB(from).or(idxBB(to));
-        this.bitboards[piece].xor(fromToBB);
-        this.bitboards[color].xor(fromToBB);
+        this.board[piece].xor(fromToBB);
+        this.board[color].xor(fromToBB);
         this.pieces[from] = null;
         this.pieces[to] = piece;
     }
