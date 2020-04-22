@@ -92,6 +92,10 @@ export default class BoardState {
             let attack = fileAttacks(src).or(rankAttacks(src));
             moves.push(attack);
         }
+        else if (piece === PIECES.QUEEN) {
+            let attack = diagonalAttacks(src).or(fileAttacks(src)).or(rankAttacks(src));
+            moves.push(attack);
+        }
 
         return moves;
     }
