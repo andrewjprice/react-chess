@@ -99,7 +99,7 @@ function nwRays() {
     const midDiag = makeBB(0x10204080, 0x01020408);
     let rays = new Array(63);
 
-    for (let r=0; r<=8*8; r+=8) {
+    for (let r=0; r<8*8; r+=8) {
         let nw = midDiag.copy().shl(r);
         for (let f=7; f>=0; f--) {
             if (f<7) {
@@ -159,11 +159,23 @@ function westRays() {
 }
 
 function swRays() {
+    const notHFile = makeBB(0x7f7f7f7f, 0x7f7f7f7f);
+    const notAFile = makeBB(0xfefefefe, 0xfefefefe);
     const midDiag = makeBB(0x08040201, 0x80402010);
     let rays = new Array(63);
 
-    for (let i=63; i>=0; i--) {
-        rays[63-i] = midDiag.copy().shr(i);
+    for (let i=63; i>=7; i-=8) {
+        let row = midDiag;
+        if (i <= 55) {
+            row.shl(1).and(notAFile);
+        }
+        for (let j=0; j<=7; j++) {
+            let file = row.copy().shr(j)
+            if (i-j % 9 == 0) {
+                file.and(notHFile);
+            }
+            rays[i-j] = file;
+        }
     }
 
     return rays;
