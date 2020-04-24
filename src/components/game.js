@@ -5,6 +5,8 @@ import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import '../styles/index.css';
 
+import BoardState from '../bitboard/board';
+
 export default class Game extends React.Component {
   constructor(props) {
     super();
@@ -12,10 +14,12 @@ export default class Game extends React.Component {
       squares: initializeBoard(props.player),
       currentSelected: -1,
       player: props.player,
+      boardState: new BoardState()
     }
   }
 
   movePiece(from, to) {
+    let move = this.state.boardState.getPieceMoves(from, to);
     const squares = this.state.squares.slice();
     squares[to] = squares[from];
     squares[from] = null;

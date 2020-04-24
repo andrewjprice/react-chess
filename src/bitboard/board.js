@@ -64,10 +64,11 @@ export default class BoardState {
     }
 
     /* psuedo-legal moves */
-    getPieceMoves(src) {
+    getPieceMoves(src, destination) {
         let moves = [];
         let piece = this.getPiece(src);
         let [color, i] = this.getColor(src);
+        this.move(piece, color, src, destination);
 
         if (piece === PIECES.PAWN) {
             let idx = idxBB(src);
@@ -85,7 +86,7 @@ export default class BoardState {
             moves.push(attack)
         }
         else if (piece === PIECES.BISHOP) {
-            let attack = diagonalAttacks(src);
+            let attack = diagonalAttacks(destination);
             moves.push(attack);
         }
         else if (piece === PIECES.ROOK) {
@@ -93,7 +94,9 @@ export default class BoardState {
             moves.push(attack);
         }
         else if (piece === PIECES.QUEEN) {
-            let attack = diagonalAttacks(src).or(fileAttacks(src)).or(rankAttacks(src));
+            let attack = diagonalAttacks(destination).or(fileAttacks(destination)).or(rankAttacks(destination));
+            // console.log('lower ' + attack.lower.toString(2));
+            // console.log('upper ' + attack.upper.toString(2));
             moves.push(attack);
         }
 

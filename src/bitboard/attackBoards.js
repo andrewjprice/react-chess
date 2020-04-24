@@ -78,7 +78,12 @@ export function pawnAttacks(i, color) {
 }
 
 export function diagonalAttacks(i) {
-    return nwRays()[i].copy().or(neRays()[i]).or(swRays()[i]).or(seRays()[i]);
+    let nw = nwRays();
+    let sw = swRays();
+    let se = seRays();
+    let ne = neRays();
+    // let idx = idxBB(i);
+    return nw[i].copy().or(ne[i]).or(sw[i]).or(se[i]);
 }
 
 export function rankAttacks(i) {

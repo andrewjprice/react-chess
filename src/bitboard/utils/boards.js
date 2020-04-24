@@ -159,25 +159,18 @@ function westRays() {
 }
 
 function swRays() {
+    // const notAFile = makeBB(0xfefefefe, 0xfefefefe);
     const notHFile = makeBB(0x7f7f7f7f, 0x7f7f7f7f);
-    const notAFile = makeBB(0xfefefefe, 0xfefefefe);
     const midDiag = makeBB(0x08040201, 0x80402010);
     let rays = new Array(63);
 
-    for (let i=63; i>=7; i-=8) {
-        let row = midDiag;
-        if (i <= 55) {
-            row.shl(1).and(notAFile);
-        }
-        for (let j=0; j<=7; j++) {
-            let file = row.copy().shr(j)
-            if (i-j % 9 == 0) {
-                file.and(notHFile);
-            }
-            rays[i-j] = file;
+    for (let r=0; r<8*8; r+=8) {
+        let ne = midDiag.copy().shr(r);
+        for (let f=0; f<8; f++) {
+            let nw = f>0 ? ne.shr(1).and(notHFile) : ne;
+            rays[63-(r+7)+f] = nw.copy();
         }
     }
-
     return rays;
 }
 
