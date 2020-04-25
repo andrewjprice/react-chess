@@ -82,7 +82,6 @@ export function diagonalAttacks(i) {
     let sw = swRays();
     let se = seRays();
     let ne = neRays();
-    // let idx = idxBB(i);
     return nw[i].copy().or(ne[i]).or(sw[i]).or(se[i]);
 }
 
