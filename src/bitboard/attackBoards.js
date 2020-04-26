@@ -86,9 +86,13 @@ export function diagonalAttacks(i) {
 }
 
 export function rankAttacks(i) {
-    return eastRays()[i].copy().or(westRays()[i]);
+    let east = eastRays();
+    let west = westRays();
+    return east[i].copy().or(west[i]);
 }
 
 export function fileAttacks(i) {
-    return northRays()[i].copy().or(southRays()[i]);
+    let north = northRays();
+    let south = southRays();
+    return north[i].copy().or(south[i]);
 }

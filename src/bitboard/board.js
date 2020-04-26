@@ -55,7 +55,9 @@ export default class BoardState {
         return null;
     }
 
-    move(piece, color, from, to) {
+    move(from, to) {
+        let piece = this.getPiece(from);
+        let [color, _] = this.getColor(from);
         let fromToBB = idxBB(from).or(idxBB(to));
         this.board[piece].xor(fromToBB);
         this.board[color].xor(fromToBB);
@@ -65,41 +67,31 @@ export default class BoardState {
 
     /* psuedo-legal moves */
     getPieceMoves(src, destination) {
-        let moves = [];
         let piece = this.getPiece(src);
         let [color, i] = this.getColor(src);
-        this.move(piece, color, src, destination);
 
         if (piece === PIECES.PAWN) {
             let idx = idxBB(src);
             let singlePush = idx.copy().shl(8).shr(i<<4);
             let doublePush = idx.copy().shl(16).shr(i<<4);
             let attack = pawnAttacks(src, color);
-            moves.push(singlePush.or(doublePush).or(attack));
+            return singlePush.or(doublePush).or(attack);
         }
         else if (piece === PIECES.KNIGHT) {
-            let attack = knightAttacksArr()[src];
-            moves.push(attack);
+            return knightAttacksArr()[src];
         }
         else if (piece === PIECES.KING) {
-            let attack = kingAttacksArr()[src];
-            moves.push(attack)
+            return kingAttacksArr()[src];
         }
         else if (piece === PIECES.BISHOP) {
-            let attack = diagonalAttacks(destination);
-            moves.push(attack);
+            return diagonalAttacks(destination);
         }
         else if (piece === PIECES.ROOK) {
-            let attack = fileAttacks(src).or(rankAttacks(src));
-            moves.push(attack);
+            return fileAttacks(src).or(rankAttacks(src));
         }
         else if (piece === PIECES.QUEEN) {
-            let attack = diagonalAttacks(destination).or(fileAttacks(destination)).or(rankAttacks(destination));
-            // console.log('lower ' + attack.lower.toString(2));
-            // console.log('upper ' + attack.upper.toString(2));
-            moves.push(attack);
+            return diagonalAttacks(destination).or(fileAttacks(destination)).or(rankAttacks(destination));
         }
-
-        return moves;
+        return null;
     }
 }

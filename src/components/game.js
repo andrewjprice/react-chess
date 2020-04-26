@@ -20,6 +20,7 @@ export default class Game extends React.Component {
 
   movePiece(from, to) {
     let move = this.state.boardState.getPieceMoves(from, to);
+    this.state.boardState.move(from, to);
     const squares = this.state.squares.slice();
     squares[to] = squares[from];
     squares[from] = null;
