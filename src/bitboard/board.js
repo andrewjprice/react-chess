@@ -1,4 +1,4 @@
-import { rankBB, idxBB } from './utils/boards';
+import { rankBB, idxBB, emptyBB } from './utils/boards';
 import { PIECES } from '../constants/index';
 import {
     pawnAttacks,
@@ -57,16 +57,30 @@ export default class BoardState {
 
     move(from, to) {
         let piece = this.getPiece(from);
-        let [color, _] = this.getColor(from);
+        let fromPiece = this.getPiece(from);
+        // let [color, _] = this.getColor(from);
         let fromToBB = idxBB(from).or(idxBB(to));
         this.board[piece].xor(fromToBB);
-        this.board[color].xor(fromToBB);
+        this.board[fromPiece].xor(fromToBB);
+        this.board[PIECES.WHITE].xor(fromToBB);
+        this.board[PIECES.BLACK].xor(fromToBB);
         this.pieces[from] = null;
         this.pieces[to] = piece;
     }
 
+    isMoveValid(src, dest) {
+        let availableMove = this.availableMove(src);
+        return availableMove.hasBB(dest);
+    }
+
+    availableMove(src) {
+        let [color, i] = this.getColor(src);
+        let psuedoMove = this.getPsuedoLegalMoves(src);
+        return psuedoMove !== null ? psuedoMove.and(this.board[color].not()) : emptyBB();
+    }
+
     /* psuedo-legal moves */
-    getPieceMoves(src, destination) {
+    getPsuedoLegalMoves(src) {
         let piece = this.getPiece(src);
         let [color, i] = this.getColor(src);
 
@@ -84,13 +98,13 @@ export default class BoardState {
             return kingAttacksArr()[src];
         }
         else if (piece === PIECES.BISHOP) {
-            return diagonalAttacks(destination);
+            return diagonalAttacks(src);
         }
         else if (piece === PIECES.ROOK) {
             return fileAttacks(src).or(rankAttacks(src));
         }
         else if (piece === PIECES.QUEEN) {
-            return diagonalAttacks(destination).or(fileAttacks(destination)).or(rankAttacks(destination));
+            return diagonalAttacks(src).or(fileAttacks(src)).or(rankAttacks(src));
         }
         return null;
     }
